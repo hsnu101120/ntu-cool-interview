@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { Course } from "./course";
 
 @Injectable()
@@ -11,5 +11,22 @@ export class CourseServerice {
         new Course(5, "I Don't Know Js yet")
     ];
 
-    
+    listAllCourses() {
+        return [ ...this.courses ];
+    }
+
+    getCourseById(id: number) {
+        const course = this.findCourseById(id)[0];
+        return { ...course };
+    }
+
+    private findCourseById(id: number): [Course, number] {
+        const courseIndex = this.courses.findIndex(course => course.id == id);
+        const course = this.courses[courseIndex];
+        // if the course doesn’t exist, return Bad Request
+        if (!course) {
+            throw new BadRequestException('Cannot find course');
+        }
+        return [course, courseIndex];
+    }
 }

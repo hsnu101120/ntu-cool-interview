@@ -22,7 +22,7 @@ export class UserService {
 
     getUserById(id: number) {
         const user = this.findUserById(id)[0];
-        return { ...user }
+        return { ...user };
     }
 
     queryUserByEmail(email: string) {
