@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from "@nestjs/common";
 import { UserService } from "./users.service";
 
 @Controller('users')
@@ -21,15 +21,19 @@ export class UserController {
     }
 
     // 2. everyone can get a user by user id
-    @Get(':id')
+    @Get('id/:id')
     getUserById(@Param('id') userId: number) {
+        console.log("id");
         return this.userService.getUserById(userId);
     }
 
     // 3. everyone can query a user by email or name
-    @Get()
-    getUserByQuery() {
-        
+    @Get('query')
+    getUserByEmailOrName(
+        @Query('email') email: string,
+        @Query('name') name: string
+    ) {
+        return this.userService.queryUserByEmailOrName(email, name);
     }
 
     // 4. everyone can edit user’s name and user’s email by user id
@@ -48,5 +52,11 @@ export class UserController {
     deleteUserById(@Param('id') userId: number) {
         this.userService.deleteUserById(userId);
         return null;
+    }
+    
+    // 6. everyone can query users by course id
+    @Get()
+    queryUserByCouseId() {
+
     }
 }

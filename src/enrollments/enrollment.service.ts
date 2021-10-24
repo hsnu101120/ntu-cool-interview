@@ -14,6 +14,22 @@ export class EnrollmentService {
         return { ...enrollment };
     }
 
+    enrollUserToCourse(userId: number, courseId: number, role: 'student' | 'teacher') {
+        const id = new Date().valueOf();
+        // if the user or the course doesn’t exist, return Bad Request
+        if (false) {
+            throw new BadRequestException('Cannot find user');
+        }
+        if (false) {
+            throw new BadRequestException('Cannot find course');
+        }
+        const newEnrollment = new Enrollment(id, userId, courseId, role);
+    }
+
+    withdrawUserByEnrollmentId(enrollmentId: number) {
+
+    }
+
     private findEnrollmentById(id: number): [Enrollment, number] {
         const enrollmentIndex = this.enrollments.findIndex(enroll => enroll.id == id);
         const enrollment = this.enrollments[enrollmentIndex];

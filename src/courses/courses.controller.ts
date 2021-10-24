@@ -10,12 +10,6 @@ export class CourseController {
         return this.courseService.listAllCourses();
     }
 
-    // 6. everyone can query users by course id
-    @Get()
-    queryUserByCouseId() {
-
-    }
-
     // 7. everyone can enroll a user to a course by user id, course id and role
     @Post()
     enrollUserToCourse() {
@@ -29,6 +23,8 @@ export class CourseController {
     }
 
     // 10. everyone can query enrollments by user id, course id or role
+    // use query string to specify user id, course id or role
+    // like: /?userId=1&role=student
     @Get()
     queryEnrollmentByUserId() {
 
@@ -51,7 +47,7 @@ export class CourseController {
     }
 
     // 12. everyone can query courses by user id
-    @Get()
+    @Get('')
     queryCourseByUserId() {
 
     }

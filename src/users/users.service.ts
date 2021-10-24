@@ -25,12 +25,9 @@ export class UserService {
         return { ...user };
     }
 
-    queryUserByEmail(email: string) {
-
-    }
-
-    queryUserByName(name: string) {
-
+    queryUserByEmailOrName(email: string, name: string) {
+        const user = this.findUserByEmailOrName(email, name)[0];
+        return { ...user };
     }
 
     updateUserById(id: number, name: string, email: string) {
@@ -58,6 +55,24 @@ export class UserService {
         const userIndex = this.users.findIndex(user => user.id == id);
         const user = this.users[userIndex];
         // if the user doesn’t exist, return Bad Request
+        if (!user) {
+            throw new BadRequestException('Could not find user.');
+        }
+        return [user, userIndex];
+    }
+
+    private findUserByEmailOrName(email: string, name: string): [User, number] {
+        var userIndex = null;
+        if (email && name) {
+            userIndex = this.users.findIndex(user => user.email === email && user.name === name);
+        }
+        else if (email) {
+            userIndex = this.users.findIndex(user => user.email === email);
+        }
+        else if (name) {
+            userIndex = this.users.findIndex(user => user.name === name);
+        }
+        const user = this.users[userIndex];
         if (!user) {
             throw new BadRequestException('Could not find user.');
         }
